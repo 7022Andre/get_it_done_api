@@ -17,9 +17,14 @@ RSpec.describe Item, type: :model do
 
   describe "invalid item" do
     let(:invalid_item_no_body) { build(:item, body: "", list_id: item.list_id) }
+    let(:invalid_item_no_list) { build(:item) }
 
     it "should be invalid because of empty body" do
       expect(invalid_item_no_body).to_not be_valid
+    end
+
+    it "should be invalid because of undefined list id" do
+      expect(invalid_item_no_list).to_not be_valid
     end
   end
 end

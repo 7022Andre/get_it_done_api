@@ -1,5 +1,5 @@
 class ItemSerializer < ActiveModel::Serializer
-  attributes :id, :body, :created_at
+  attributes :id, :list_id, :body, :created_at
 
   def created_at
     object.created_at.strftime('%B %d, %Y')
