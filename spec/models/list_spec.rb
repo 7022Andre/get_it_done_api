@@ -12,6 +12,10 @@ RSpec.describe List, type: :model do
     it "is public by default" do
       expect(list.public).to be(true)
     end
+
+    it "belongs to user" do
+      expect(list.user_id).to be(user.id)
+    end
   end
 
   describe "invalid list" do

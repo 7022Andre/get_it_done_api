@@ -1,0 +1,13 @@
+{
+  "type": "object",
+  "lists": {
+    "type": "object",
+    "properties": {
+      "id": { "type": "integer" },
+      "title": { "type": "string" },
+      "user_id": { "type": "integer" },
+      "created_at": { "type": "string", "format": "date-time" }
+    },
+    "required": ["id","title","user_id","created_at"]
+  }
+}
