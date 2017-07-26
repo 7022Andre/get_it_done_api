@@ -11,7 +11,7 @@ RSpec.describe Item, type: :model do
     end
 
     it "belongs to list" do
-      expect(item).to have_attributes(list_id: item.list_id)
+      expect(item.list_id).to be(list.id)
     end
   end
 
