@@ -37,7 +37,7 @@ RSpec.describe Api::ListsController, type: :controller do
   end
 
   describe "user not logged in" do
-    context "receive error 401" do
+    context "returns error 401" do
       it "when trying to create list" do
         post :create, params: { user_id: user.id, list: { title: "My test list" } }
         expect(response).to have_http_status(401)
