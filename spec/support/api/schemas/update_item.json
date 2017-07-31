@@ -1,13 +1,14 @@
 {
-  "type": "array",
+  "type": "object",
   "lists": {
     "type": "object",
     "properties": {
       "id": { "type": "integer" },
-      "body": { "type": "string" },
       "list_id": { "type": "integer" },
+      "body": { "type": "string" },
+      "completed": { "type": "string" },
       "created_at": { "type": "string", "format": "date-time" }
     },
-    "required": ["id","body","list_id","created_at"]
+    "required": ["id","list_id","body","created_at"]
   }
 }
