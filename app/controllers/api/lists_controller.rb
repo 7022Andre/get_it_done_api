@@ -30,8 +30,10 @@ class Api::ListsController < ApplicationController
   def destroy
     find_list
 
-    if @list.destroy
-      render json: { message: "List removed" }, status: :ok
+    if @list && @list.destroy
+      render json: { message: "List removed." }, status: :ok
+    else
+      record_not_found
     end
   end
 
@@ -42,6 +44,6 @@ class Api::ListsController < ApplicationController
   end
 
   def find_list
-    @list = User.find(params[:user_id]).lists.find(params[:id])
+    @list = List.find_by_user_id_and_id(params[:user_id], params[:id])
   end
 end
