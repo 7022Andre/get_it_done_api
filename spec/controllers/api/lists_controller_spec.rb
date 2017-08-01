@@ -8,7 +8,7 @@ RSpec.describe Api::ListsController, type: :controller do
     login_user
 
     it "can create list" do
-      post :create, params: { user_id: 1, list: { title: "My test list" } }
+      post :create, params: { user_id: user.id, list: { title: "My test list" } }
       expect(response).to have_http_status(200)
       expect(response.body).to match_response_schema("create_list")
     end
@@ -17,6 +17,12 @@ RSpec.describe Api::ListsController, type: :controller do
       get :index, params: { user_id: user.id }
       expect(response).to have_http_status(200)
       expect(response.body).to match_response_schema("get_lists")
+    end
+
+    it "can update a list" do
+      put :update, params: { user_id: user.id, id: list.id, list: { public: false, title: "My new List title" } }
+      expect(response).to have_http_status(200)
+      expect(response.body).to match_response_schema("update_list")
     end
 
     it "can delete list" do
@@ -31,19 +37,26 @@ RSpec.describe Api::ListsController, type: :controller do
   end
 
   describe "user not logged in" do
-    it "returns error 401 when trying to create list" do
-      post :create, params: { user_id: 1, list: { title: "My test list" } }
-      expect(response).to have_http_status(401)
-    end
+    context "returns error 401" do
+      it "when trying to create list" do
+        post :create, params: { user_id: user.id, list: { title: "My test list" } }
+        expect(response).to have_http_status(401)
+      end
 
-    it "returns error 401 when trying to delete list" do
-      delete :destroy, params: { user_id: user.id, id: list.id }
-      expect(response).to have_http_status(401)
-    end
+      it "when trying to delete list" do
+        delete :destroy, params: { user_id: user.id, id: list.id }
+        expect(response).to have_http_status(401)
+      end
 
-    it "returns error 401 when trying to see list for specific user" do
-      get :index, params: { user_id: user.id }
-      expect(response).to have_http_status(401)
+      it "when trying to see list for specific user" do
+        get :index, params: { user_id: user.id }
+        expect(response).to have_http_status(401)
+      end
+
+      it "when updating a list" do
+        put :update, params: { user_id: user.id, id: list.id, list: { public: false, title: "My new List title" } }
+        expect(response).to have_http_status(401)
+      end
     end
   end
 end

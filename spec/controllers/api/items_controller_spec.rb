@@ -19,6 +19,12 @@ RSpec.describe Api::ItemsController, type: :controller do
       expect(response).to have_http_status(200)
       expect(response.body).to match_response_schema("create_item")
     end
+
+    it "can update item" do
+      put :update, params: { list_id: list.id, id: item.id, item: { completed: true, body: "My updated item" } }
+      expect(response).to have_http_status(200)
+      expect(response.body).to match_response_schema("update_item")
+    end
   end
 
   describe "user not logged in" do
