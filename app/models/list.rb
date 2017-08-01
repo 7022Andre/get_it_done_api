@@ -1,6 +1,6 @@
 class List < ApplicationRecord
   belongs_to :user
-  has_many :items, dependent: :destroy
+  has_many :items, dependent: :delete_all
 
   validates :title, length: { minimum: 1, maximum: 100 }, presence: true
   validates :user, presence: true
