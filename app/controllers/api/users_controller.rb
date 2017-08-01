@@ -20,7 +20,7 @@ class Api::UsersController < ApplicationController
     user = User.find(params[:id])
 
     if user.destroy
-      render json: { message: "User removed" }, status: :ok
+      render json: { message: "User removed." }, status: :ok
     end
   end
 

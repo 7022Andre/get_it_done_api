@@ -18,7 +18,7 @@ class Api::ItemsController < ApplicationController
   end
 
   def update
-    item = List.find(params[:list_id]).items.find(params[:id])
+    item = Item.find_by_list_id_and_id(params[:list_id], params[:id])
 
     if item.update(item_params)
       render json: item
