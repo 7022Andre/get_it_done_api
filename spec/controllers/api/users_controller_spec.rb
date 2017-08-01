@@ -30,19 +30,21 @@ RSpec.describe Api::UsersController, type: :controller do
   end
 
   describe "user not logged in" do
-    it "returns error 401 when trying to get users index" do
-      get :index
-      expect(response).to have_http_status(401)
-    end
+    context "returns error 401" do
+      it "when trying to get users index" do
+        get :index
+        expect(response).to have_http_status(401)
+      end
 
-    it "returns error 401 when trying to create user" do
-      post :create, params: { user: user }
-      expect(response).to have_http_status(401)
-    end
+      it "when trying to create user" do
+        post :create, params: { user: user }
+        expect(response).to have_http_status(401)
+      end
 
-    it "returns error 401 when trying to delete user" do
-      delete :destroy, params: { id: user.id }
-      expect(response).to have_http_status(401)
+      it "when trying to delete user" do
+        delete :destroy, params: { id: user.id }
+        expect(response).to have_http_status(401)
+      end
     end
   end
 end

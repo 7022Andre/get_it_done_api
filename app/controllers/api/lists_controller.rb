@@ -17,11 +17,23 @@ class Api::ListsController < ApplicationController
     end
   end
 
-  def destroy
-    list = User.find(params[:user_id]).lists.find(params[:id])
+  def update
+    find_list
 
-    if list.destroy
-      render json: { message: "List removed" }, status: :ok
+    if @list.update(list_params)
+      render json: @list
+    else
+      render json: { errors: list.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    find_list
+
+    if @list && @list.destroy
+      render json: { message: "List removed." }, status: :ok
+    else
+      record_not_found
     end
   end
 
@@ -29,5 +41,9 @@ class Api::ListsController < ApplicationController
 
   def list_params
     params.require(:list).permit(:title, :public)
+  end
+
+  def find_list
+    @list = List.find_by_user_id_and_id(params[:user_id], params[:id])
   end
 end
