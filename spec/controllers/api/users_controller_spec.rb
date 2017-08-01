@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Api::UsersController, type: :controller do
+  let(:user) { create(:user) }
+
   describe "user logged in" do
     login_user
 
@@ -11,9 +13,19 @@ RSpec.describe Api::UsersController, type: :controller do
     end
 
     it "can create user" do
-      post :create, params: { user: { email: "testuser@api.com", password: "password" } }
+      post :create, params: { user: { email: "mytestuser@api.com", password: "password" } }
       expect(response).to have_http_status(200)
       expect(response.body).to match_response_schema("create_user")
+    end
+
+    it "can delete user" do
+      delete :destroy, params: { id: user.id }
+      expect(response).to have_http_status(200)
+    end
+
+    it "receives 404 when trying to delete non-existent user" do
+      delete :destroy, params: { id: 0 }
+      expect(response).to have_http_status(404)
     end
   end
 
@@ -24,7 +36,12 @@ RSpec.describe Api::UsersController, type: :controller do
     end
 
     it "returns error 401 when trying to create user" do
-      post :create, params: { user: { email: "testuser@api.com", password: "password" } }
+      post :create, params: { user: user }
+      expect(response).to have_http_status(401)
+    end
+
+    it "returns error 401 when trying to delete user" do
+      delete :destroy, params: { id: user.id }
       expect(response).to have_http_status(401)
     end
   end
