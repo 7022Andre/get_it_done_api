@@ -4,4 +4,5 @@ class User < ApplicationRecord
   include DeviseTokenAuth::Concerns::User
 
   has_many :lists, dependent: :delete_all
+  has_many :items, through: :lists
 end

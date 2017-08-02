@@ -5,10 +5,8 @@ Rails.application.routes.draw do
     end
 
     resources :lists, only: [] do
-      resources :items, only: [:index, :create, :update]
+      resources :items, only: [:index, :create, :update,:destroy]
     end
-
-    resources :items, only: [:destroy]
   end
 
   mount_devise_token_auth_for 'User', at: 'api',

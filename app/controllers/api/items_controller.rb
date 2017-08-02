@@ -18,12 +18,27 @@ class Api::ItemsController < ApplicationController
   end
 
   def update
-    item = Item.find_by_list_id_and_id(params[:list_id], params[:id])
+    if user_authorized?
+      find_item
 
-    if item.update(item_params)
-      render json: item
+      if @item.update(item_params)
+        render json: @item
+      else
+        render json: { errors: item.errors.full_messages }, status: :unprocessable_entity
+      end
+
     else
-      render json: { errors: item.errors.full_messages }, status: :unprocessable_entity
+        not_authorized
+    end
+  end
+
+  def destroy
+    find_item
+
+    if @item && @item.destroy
+      render json: { message: "Item deleted."}, status: :ok
+    else
+      record_not_found
     end
   end
 
@@ -31,5 +46,14 @@ class Api::ItemsController < ApplicationController
 
   def item_params
     params.require(:item).permit(:body, :completed)
+  end
+
+  def find_item
+    @item = Item.find_by_list_id_and_id(params[:list_id], params[:id])
+  end
+
+  def user_authorized?
+    list = 
+    current_user.id == params[:user_id].to_i
   end
 end
