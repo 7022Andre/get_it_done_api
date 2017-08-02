@@ -35,12 +35,14 @@ RSpec.describe Api::ItemsController, type: :controller do
     end
 
     it "can delete own item" do
-      delete :destroy, params: { list_id: list_of_logged_in_user, id: item_of_logged_in_user }
+      delete :destroy, params: { id: item_of_logged_in_user }
       expect(response).to have_http_status(200)
     end
 
     it "can't delete item of other user" do
-    
+      delete :destroy, params: { id: item_of_not_logged_in_user }
+
+      expect(response).to have_http_status(200)
     end
   end
 

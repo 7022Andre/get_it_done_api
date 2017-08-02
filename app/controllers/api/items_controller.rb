@@ -19,7 +19,7 @@ class Api::ItemsController < ApplicationController
 
   def update
     if user_authorized?
-      find_item
+      @item = Item.find_by_list_id_and_id(params[:list_id], params[:id])
 
       if @item.update(item_params)
         render json: @item
@@ -33,7 +33,7 @@ class Api::ItemsController < ApplicationController
   end
 
   def destroy
-    find_item
+    @item = Item.find(params[:id])
 
     if @item && @item.destroy
       render json: { message: "Item deleted."}, status: :ok
@@ -48,12 +48,10 @@ class Api::ItemsController < ApplicationController
     params.require(:item).permit(:body, :completed)
   end
 
-  def find_item
-    @item = Item.find_by_list_id_and_id(params[:list_id], params[:id])
-  end
-
   def user_authorized?
-    list = 
-    current_user.id == params[:user_id].to_i
+    list = Item.find(params[:id]).list_id
+    user_id = List.find(list).user_id
+
+    current_user.id == user_id
   end
 end

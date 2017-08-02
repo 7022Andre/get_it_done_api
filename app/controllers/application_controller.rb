@@ -11,8 +11,4 @@ class ApplicationController < ActionController::API
   def not_authorized
     render json: { message: "You're not authorized to do this." }, status: 403
   end
-
-  def private_list
-
-  end
 end
