@@ -15,10 +15,14 @@ RSpec.describe Api::ListsController, type: :controller do
       expect(response.body).to match_response_schema("create_list")
     end
 
-    it "can see lists of other user" do
+    it "can see public lists of other user" do
       get :index, params: { user_id: user_not_logged_in }
       expect(response).to have_http_status(200)
       expect(response.body).to match_response_schema("get_lists")
+    end
+
+    it "can't see private list of other user" do
+
     end
 
     it "can update own list" do

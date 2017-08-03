@@ -20,4 +20,19 @@ This API was written using TDD with the help of the following gems:
 
 ### How to access the API
 
+- Preferably use [Postman]() but [curl](https://github.com/curl/curl) works just as well
+- Start Rails server `rails s`
+
+#### Sign in
+
+- POST localhost:3000/api/sign_in
+- Enter your email and password as key/value in header
+- Returns user data in body and authentication credentials in response header 
+- **For all future requests attach `access-token`, `client` and `uid` keys/value pairs to request header**
+
+#### Get all users
+
+- GET localhost:3000/api/users
+- 
+
 ### Project screenshots

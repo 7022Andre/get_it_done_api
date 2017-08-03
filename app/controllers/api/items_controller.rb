@@ -33,12 +33,17 @@ class Api::ItemsController < ApplicationController
   end
 
   def destroy
-    @item = Item.find(params[:id])
+    if user_authorized?
+      @item = Item.find(params[:id])
 
-    if @item && @item.destroy
-      render json: { message: "Item deleted."}, status: :ok
+      if @item && @item.destroy
+        render json: { message: "Item deleted."}, status: :ok
+      else
+        record_not_found
+      end
+
     else
-      record_not_found
+      not_authorized
     end
   end
 
@@ -49,9 +54,7 @@ class Api::ItemsController < ApplicationController
   end
 
   def user_authorized?
-    list = Item.find(params[:id]).list_id
-    user_id = List.find(list).user_id
-
-    current_user.id == user_id
+    item = Item.find(params[:id])
+    current_user == item.list.user
   end
 end
