@@ -1,5 +1,6 @@
 class Api::ListsController < ApplicationController
   before_action :authenticate_user!
+  before_action :user_authorized?, only: [:update, :destroy]
 
   def index
     lists = User.find(params[:user_id]).lists
@@ -18,32 +19,22 @@ class Api::ListsController < ApplicationController
   end
 
   def update
-    if user_authorized?
-      find_list
+    find_list
 
-      if @list.update(list_params)
-        render json: @list
-      else
-        render json: { errors: list.errors.full_messages }, status: :unprocessable_entity
-      end
-
+    if @list.update(list_params)
+      render json: @list
     else
-        not_authorized
+      render json: { errors: list.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
   def destroy
-    if user_authorized?
-      find_list
+    find_list
 
-      if @list && @list.destroy
-        render json: { message: "List removed." }, status: :ok
-      else
-        record_not_found
-      end
-
+    if @list && @list.destroy
+      render json: { message: "List removed." }, status: :ok
     else
-        not_authorized
+      record_not_found
     end
   end
 
@@ -58,6 +49,6 @@ class Api::ListsController < ApplicationController
   end
 
   def user_authorized?
-    current_user.id == params[:user_id].to_i
+    current_user.id == params[:user_id].to_i || not_authorized
   end
 end
