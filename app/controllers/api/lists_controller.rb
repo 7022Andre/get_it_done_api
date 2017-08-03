@@ -1,11 +1,12 @@
 class Api::ListsController < ApplicationController
   before_action :authenticate_user!
+  before_action :user_authorized?, only: [:update, :destroy]
 
   def index
     lists = User.find(params[:user_id]).lists
     render json: lists, each_serializer: ListSerializer
   end
-  
+
   def create
     list = List.new(list_params)
     list.user_id = params[:user_id]
@@ -45,5 +46,9 @@ class Api::ListsController < ApplicationController
 
   def find_list
     @list = List.find_by_user_id_and_id(params[:user_id], params[:id])
+  end
+
+  def user_authorized?
+    current_user.id == params[:user_id].to_i || not_authorized
   end
 end
