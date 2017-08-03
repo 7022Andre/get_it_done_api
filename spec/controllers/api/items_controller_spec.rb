@@ -42,7 +42,7 @@ RSpec.describe Api::ItemsController, type: :controller do
     it "can't delete item of other user" do
       delete :destroy, params: { id: item_of_not_logged_in_user }
 
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(403)
     end
   end
 

@@ -1,5 +1,6 @@
 class Api::ItemsController < ApplicationController
   before_action :authenticate_user!
+  before_action :user_authorized?, only: [:update, :destroy]
 
   def index
     items = List.find(params[:list_id]).items
@@ -18,17 +19,12 @@ class Api::ItemsController < ApplicationController
   end
 
   def update
-    if user_authorized?
-      @item = Item.find_by_list_id_and_id(params[:list_id], params[:id])
+    @item = Item.find_by_list_id_and_id(params[:list_id], params[:id])
 
-      if @item.update(item_params)
-        render json: @item
-      else
-        render json: { errors: item.errors.full_messages }, status: :unprocessable_entity
-      end
-
+    if @item.update(item_params)
+      render json: @item
     else
-        not_authorized
+      render json: { errors: item.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
@@ -49,9 +45,7 @@ class Api::ItemsController < ApplicationController
   end
 
   def user_authorized?
-    list = Item.find(params[:id]).list_id
-    user_id = List.find(list).user_id
-
-    current_user.id == user_id
+    item = Item.find(params[:id])
+    current_user == item.list.user || not_authorized
   end
 end

@@ -3,5 +3,5 @@ class User < ApplicationRecord
          :trackable, :validatable
   include DeviseTokenAuth::Concerns::User
 
-  has_many :lists, dependent: :delete_all
+  has_many :lists, dependent: :destroy
 end
