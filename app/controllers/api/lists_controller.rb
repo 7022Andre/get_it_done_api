@@ -3,7 +3,12 @@ class Api::ListsController < ApplicationController
   before_action :user_authorized?, only: [:update, :destroy]
 
   def index
-    lists = User.find(params[:user_id]).lists
+    if current_user.id == params[:user_id].to_i
+      lists = User.find(params[:user_id]).lists
+    else
+      lists = User.find(params[:user_id]).lists.where(public: true)
+    end
+    
     render json: lists, each_serializer: ListSerializer
   end
 

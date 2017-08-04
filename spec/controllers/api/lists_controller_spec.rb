@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe Api::ListsController, type: :controller do
   let(:user_not_logged_in) { create(:user) }
   let(:list_of_not_logged_in_user) { create(:list, user_id: user_not_logged_in.id) }
+  let(:private_list_of_other_user) { create(:list, user_id: user_not_logged_in.id, public: false) }
 
   let(:list_of_logged_in_user) { create(:list, user_id: subject.current_user.id) }
 
@@ -19,10 +20,6 @@ RSpec.describe Api::ListsController, type: :controller do
       get :index, params: { user_id: user_not_logged_in }
       expect(response).to have_http_status(200)
       expect(response.body).to match_response_schema("get_lists")
-    end
-
-    it "can't see private list of other user" do
-
     end
 
     it "can update own list" do

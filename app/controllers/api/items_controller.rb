@@ -29,17 +29,12 @@ class Api::ItemsController < ApplicationController
   end
 
   def destroy
-    if user_authorized?
-      @item = Item.find(params[:id])
+    @item = Item.find(params[:id])
 
-      if @item && @item.destroy
-        render json: { message: "Item deleted."}, status: :ok
-      else
-        record_not_found
-      end
-
+    if @item && @item.destroy
+      render json: { message: "Item deleted."}, status: :ok
     else
-      not_authorized
+      record_not_found
     end
   end
 
