@@ -6,11 +6,11 @@ A command-line operated API for a basic to-do list written in Ruby on Rails.
 - Ruby: 2.4.0
 - Rails: 5.1.2
 
-Main features incliude:
+This API allows users to create public and private to-do lists. Main features:
 
 - Token authentication via [Devise Token Auth](https://github.com/lynndylanhurley/devise_token_auth)
 - Custom JSON string creation via [ActiveModelSerializers](https://github.com/rails-api/active_model_serializers)
-- CRUD operations for users, lists, and to-do-items
+- CRUD operations for users, lists, and to-do items
 - Private/Public lists
 
 This API was written using TDD with the help of the following gems:
@@ -21,22 +21,22 @@ This API was written using TDD with the help of the following gems:
 
 ## How to access the API
 
-- Clone repo
-- Start Rails server `rails s`
-- Preferably use [Postman](https://www.getpostman.com/apps) but [curl](https://github.com/curl/curl) works just as well to make requests
+1. Clone repo
+2. Start Rails server `rails s`
+3. Preferably use [Postman](https://www.getpostman.com/apps) but [curl](https://github.com/curl/curl) works just as well to make requests
 
 ### Sign in
 
 - `POST localhost:3000/api/sign_in`
-- Enter your email and password as key/value in request header
-- Returns user data in body and authentication credentials in response header 
-- **For all future requests attach `access-token`, `client` and `uid` keys/value pairs to request header**
+- Enter your email and password as key/value in request header.
+- Responds with user data in body and authentication credentials in header.
+- **For all future requests attach `access-token`, `client` and `uid` keys/value pairs to request header.**
 
 ![api_sign_in.gif](https://s1.postimg.org/cml1pegof/api_sign_in.gif "Sign in")
 
 
 ---
-### Users
+### User operations
 
 #### Get all users
 
@@ -59,7 +59,7 @@ This API was written using TDD with the help of the following gems:
 
 
 ---
-### Lists
+### List operations
 
 #### Get list of specific user
 
@@ -90,11 +90,11 @@ This API was written using TDD with the help of the following gems:
 
 
 ---
-### Items
+### Item operations
 
 #### Get items of list
 
-- `GET localhost:3000/api/lists/12/items`
+- `GET localhost:3000/api/lists/{list.id}/items`
 
 ![api_get_items.gif](https://s2.postimg.org/ltme9wsrd/api_get_items.gif "Get items")
 
