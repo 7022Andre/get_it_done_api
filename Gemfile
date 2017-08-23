@@ -1,12 +1,12 @@
 source 'https://rubygems.org'
 ruby '2.4.0'
 
-gem 'rails', '~> 5.1.2'
-gem 'sqlite3'
-gem 'puma', '~> 3.7'
-gem 'jbuilder', '~> 2.5'
 gem 'active_model_serializers', '~> 0.10.0'
 gem 'devise_token_auth'
+gem 'jbuilder', '~> 2.5'
+gem 'puma', '~> 3.7'
+gem 'rails', '~> 5.1.2'
+gem 'sqlite3'
 
 group :production do
   gem 'pg'
@@ -15,15 +15,15 @@ end
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
-  gem 'rspec-rails'
-  gem 'rails-controller-testing'
-  gem 'faker'
   gem 'factory_girl_rails'
+  gem 'faker'
+  gem 'json-schema'
   gem 'pry-rails'
+  gem 'rails-controller-testing'
+  gem 'rspec-rails'
   gem 'spring'
-  gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'spring-commands-rspec'
-  gem "json-schema"
+  gem 'spring-watcher-listen', '~> 2.0.0'
 end
 
 group :development do

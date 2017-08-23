@@ -5,7 +5,7 @@ class ApplicationController < ActionController::API
   private
 
   def record_not_found
-    render json: { message: "Entry not found." }, status: 404
+    render json: { message: 'Entry not found.' }, status: 404
   end
 
   def not_authorized

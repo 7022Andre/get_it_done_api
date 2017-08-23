@@ -6,7 +6,7 @@ class Api::ItemsController < ApplicationController
     items = List.find(params[:list_id]).items
     render json: items, each_serializer: ItemSerializer
   end
-  
+
   def create
     item = Item.new(item_params)
     item.list_id = params[:list_id]
@@ -32,7 +32,7 @@ class Api::ItemsController < ApplicationController
     @item = Item.find(params[:id])
 
     if @item && @item.destroy
-      render json: { message: "Item deleted."}, status: :ok
+      render json: { message: 'Item deleted.' }, status: :ok
     else
       record_not_found
     end

@@ -8,7 +8,7 @@ class Api::ListsController < ApplicationController
     else
       lists = User.find(params[:user_id]).lists.where(public: true)
     end
-    
+
     render json: lists, each_serializer: ListSerializer
   end
 
@@ -37,7 +37,7 @@ class Api::ListsController < ApplicationController
     find_list
 
     if @list && @list.destroy
-      render json: { message: "List removed." }, status: :ok
+      render json: { message: 'List removed.' }, status: :ok
     else
       record_not_found
     end
