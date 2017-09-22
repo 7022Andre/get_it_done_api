@@ -22,8 +22,9 @@ This API was written using TDD with the help of the following gems:
 ## How to access the API
 
 1. Clone repo
-2. Start Rails server `rails s`
-3. Preferably use [Postman](https://www.getpostman.com/apps) but [curl](https://github.com/curl/curl) works just as well to make requests
+2. `Bundle install`
+3. Start Rails server `rails s`
+4. Preferably use [Postman](https://www.getpostman.com/apps) but [curl](https://github.com/curl/curl) works just as well to make requests
 
 ### Sign in
 
